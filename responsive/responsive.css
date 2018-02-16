@@ -1,4 +1,25 @@
-.k8em0 { 
+@media (min-width: 1201px) { 
+
+.k8em0 {width:600px; height:600px; background:url(k8em0.jpg) 0 0px;}
+
+}
+
+@media (max-width: 1200px) and (min-width: 901) { 
+
+.k8em0 {width:600px; height:600px; background:url(k8em0.jpg) 600 0px;}
+
+}
+
+@media (max-width: 900px) and (min-width: 601) { 
+
+.k8em0 {width:600px; height:600px; background:url(k8em0.jpg) 0 -600px;}
+
+}
+
+@media (max-width: 600px) { 
+
+.k8em0 {width:600px; height:600px; background:url(k8em0.jpg) 600 -600px;}
 
 
- }
+}
+
