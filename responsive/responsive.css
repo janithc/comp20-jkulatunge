@@ -1,24 +1,24 @@
 @media (min-width: 1201px) { 
 
-.k8em0 {width:600px; height:600px; background:url(k8em0.jpg) 0 0px;}
+.k8em0 {width:600px; height:600px; background:url(k8em0.jpg) 0px 0px;}
 
 }
 
-@media (max-width: 1200px) and (min-width: 901) { 
+@media (max-width: 1200px) and (min-width: 901px) { 
 
-.k8em0 {width:600px; height:600px; background:url(k8em0.jpg) 600 0px;}
+.k8em0 {width:600px; height:600px; background:url(k8em0.jpg) 600px 0px;}
 
 }
 
-@media (max-width: 900px) and (min-width: 601) { 
+@media (max-width: 900px) and (min-width: 601px) { 
 
-.k8em0 {width:600px; height:600px; background:url(k8em0.jpg) 0 -600px;}
+.k8em0 {width:600px; height:600px; background:url(k8em0.jpg) 0px -600px;}
 
 }
 
 @media (max-width: 600px) { 
 
-.k8em0 {width:600px; height:600px; background:url(k8em0.jpg) 600 -600px;}
+.k8em0 {width:600px; height:600px; background:url(k8em0.jpg) 600px -600px;}
 
 
 }
