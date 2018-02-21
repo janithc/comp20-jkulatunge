@@ -15,34 +15,125 @@
 
 <script>
 
-stanzaArray = ["We're no strangers to love <br>  You know the rules and so do I <br> A full commitment's what I'm thinking of <br> You wouldn't get this from any other guy",
+
+
+var stanzaArray = [" ", "We're no strangers to love <br>  You know the rules and so do I <br> A full commitment's what I'm thinking of <br> You wouldn't get this from any other guy",
 
 "I just wanna tell you how I'm feeling <br> Gotta make you understand", 
 
 "Never gonna give you up <br> Never gonna let you down <br> Never gonna run around and desert you", 
 
-"Never gonna make you cry <br> Never gonna say goodbye <br> Never gonna tell a lie and hurt you" ]; 
+"Never gonna make you cry <br> Never gonna say goodbye <br> Never gonna tell a lie and hurt you", 
 
-changeTimes = [1, 2, 5];
+"We've known each other for so long <br> Your heart's been aching, but <br> You're too shy to say it <br> Inside, we both know what's been going on <br> We know the game and we're gonna play it", 
+"And if you ask me how I'm feeling <br> Don't tell me you're too blind to see", "(Ooh, give you up) <br> (Ooh, give you up) <br> Never gonna give, never gonna give <br> (Give you up) <br> Never gonna give, never gonna give <br> (Give you up)"
+ ]; 
 
-currentVid = document.getElementById("rickroll");
+var changeTimes = [0, 18, 35, 43, 51, 59, 60, 77, 85, 93, 101, 102, 110, 118, 120, 135, 136, 153, 161, 169, 177, 178, 186, 194, 195, 203, 211, 212];
 
-// function updateLyrics() {
-		
-	while (currentVid.currentTime < currentVid.duration) {
-console.log('inside loop')
-		c = 0; 
+var currentVid = document.getElementById("rickroll");
 
-    	if ((currentVid.currentTime > changeTimes[c]) && (currentVid.currentTime<changeTimes[c+1])) {
-    		console.log('entered if statement'); 
- 		document.getElementById("lyrics").innerHTML = stanzaArray[c];
+var lyricdiv = document.getElementById("lyrics"); 
 
-		c++; }
+
+currentVid.addEventListener("timeupdate",updateLyrics);
+
+function updateLyrics() {
+
+    	if ((currentVid.currentTime > changeTimes[0]) && (currentVid.currentTime<changeTimes[1])) {
+ 					lyricdiv.innerHTML = stanzaArray[0];
+ 				}
+	
+ 		else if ((currentVid.currentTime > changeTimes[1]) && (currentVid.currentTime<changeTimes[2])) {
+ 					lyricdiv.innerHTML = stanzaArray[1];
+ 				}
+
+ 		else if ((currentVid.currentTime > changeTimes[2]) && (currentVid.currentTime<changeTimes[3])) {
+ 					lyricdiv.innerHTML = stanzaArray[2];
+ 				}	
+
+ 		else if ((currentVid.currentTime > changeTimes[3]) && (currentVid.currentTime<changeTimes[4])) {
+ 					lyricdiv.innerHTML = stanzaArray[3];
+ 				}
+
+ 		else if ((currentVid.currentTime > changeTimes[4]) && (currentVid.currentTime<changeTimes[5])) {
+ 					lyricdiv.innerHTML = stanzaArray[4];
+ 				}
+
+ 		else if ((currentVid.currentTime > changeTimes[5]) && (currentVid.currentTime<changeTimes[6])) {
+ 					lyricdiv.innerHTML = stanzaArray[0];
+ 				}
+
+ 		else if ((currentVid.currentTime > changeTimes[6]) && (currentVid.currentTime<changeTimes[7])) {
+ 					lyricdiv.innerHTML = stanzaArray[5];
+ 				}
+
+ 		else if ((currentVid.currentTime > changeTimes[7]) && (currentVid.currentTime<changeTimes[8])) {
+ 					lyricdiv.innerHTML = stanzaArray[6];
+ 				}
+
+ 		else if ((currentVid.currentTime > changeTimes[8]) && (currentVid.currentTime<changeTimes[9])) {
+ 					lyricdiv.innerHTML = stanzaArray[3];
+ 				}
+
+ 		else if ((currentVid.currentTime > changeTimes[9]) && (currentVid.currentTime<changeTimes[10])) {
+ 					lyricdiv.innerHTML = stanzaArray[4];
+ 				}
+ 		else if ((currentVid.currentTime > changeTimes[10]) && (currentVid.currentTime<changeTimes[11])) {
+ 					lyricdiv.innerHTML = stanzaArray[0];
+ 				}
+ 		else if ((currentVid.currentTime > changeTimes[11]) && (currentVid.currentTime<changeTimes[12])) {
+ 					lyricdiv.innerHTML = stanzaArray[3];
+ 				}
+ 		else if ((currentVid.currentTime > changeTimes[12]) && (currentVid.currentTime<changeTimes[13])) {
+ 					lyricdiv.innerHTML = stanzaArray[4];
+				}
+		else if ((currentVid.currentTime > changeTimes[13]) && (currentVid.currentTime<changeTimes[14])) {
+ 					lyricdiv.innerHTML = stanzaArray[0];
+				}
+		else if ((currentVid.currentTime > changeTimes[14]) && (currentVid.currentTime<changeTimes[15])) {
+ 					lyricdiv.innerHTML = stanzaArray[7];
+				}
+		else if ((currentVid.currentTime > changeTimes[15]) && (currentVid.currentTime<changeTimes[16])) {
+ 					lyricdiv.innerHTML = stanzaArray[0];
+				}
+		else if ((currentVid.currentTime > changeTimes[16]) && (currentVid.currentTime<changeTimes[17])) {
+ 					lyricdiv.innerHTML = stanzaArray[5];
+				}
+		else if ((currentVid.currentTime > changeTimes[17]) && (currentVid.currentTime<changeTimes[18])) {
+ 					lyricdiv.innerHTML = stanzaArray[2];
+				}
+		else if ((currentVid.currentTime > changeTimes[18]) && (currentVid.currentTime<changeTimes[19])) {
+ 					lyricdiv.innerHTML = stanzaArray[3];
+				}
+		else if ((currentVid.currentTime > changeTimes[19]) && (currentVid.currentTime<changeTimes[20])) {
+ 					lyricdiv.innerHTML = stanzaArray[4];
+				}
+		else if ((currentVid.currentTime > changeTimes[20]) && (currentVid.currentTime<changeTimes[21])) {
+ 					lyricdiv.innerHTML = stanzaArray[0];
+				}
+		else if ((currentVid.currentTime > changeTimes[21]) && (currentVid.currentTime<changeTimes[22])) {
+ 					lyricdiv.innerHTML = stanzaArray[3];
+				}
+		else if ((currentVid.currentTime > changeTimes[22]) && (currentVid.currentTime<changeTimes[23])) {
+ 					lyricdiv.innerHTML = stanzaArray[4];
+				}
+		else if ((currentVid.currentTime > changeTimes[23]) && (currentVid.currentTime<changeTimes[24])) {
+ 					lyricdiv.innerHTML = stanzaArray[0];
+				}
+		else if ((currentVid.currentTime > changeTimes[24]) && (currentVid.currentTime<changeTimes[25])) {
+ 					lyricdiv.innerHTML = stanzaArray[3];
+				}
+		else if ((currentVid.currentTime > changeTimes[25]) && (currentVid.currentTime<changeTimes[26])) {
+ 					lyricdiv.innerHTML = stanzaArray[4];
+				}
+		else if ((currentVid.currentTime > changeTimes[26]) && (currentVid.currentTime<changeTimes[27])) {
+ 					lyricdiv.innerHTML = stanzaArray[0];
+				}
+		else { 
+					lyricdiv.innerHTML = stanzaArray [0]; 
+				}
 	}
-
-	//}
-
-//currentVid.addEventListener("playing",updateLyrics);
 
 
 
