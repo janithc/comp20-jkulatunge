@@ -1,0 +1,40 @@
+body {
+
+	background-image: url("http://thefw.com/files/2011/10/things-rick-astley-checklist1.jpg?w=980&q=75");
+    background-size: 320px 240px;
+    background-repeat: repeat; 
+}
+
+#title{
+
+	text-align: center;
+	font-family: Courier;
+	font-variant: small-caps; 
+	font-size: 35px; 
+	background-color: #d9d9d9; 
+	width: 50%;
+ 	margin-left: 25%;
+ 	margin-right: 25%;
+
+}
+
+#rickroll{
+
+	max-width: 100%; 
+	height:auto;
+	margin-left: 25%; 
+	margin-right: 25%;
+
+}
+
+#lyrics{
+
+	text-align: center;
+	font-family: Courier; 
+	font-size: 20px; 
+	background-color: #d9d9d9; 
+ 	width: 50%;
+ 	margin-left: 25%;
+ 	margin-right: 25%;
+}
+
