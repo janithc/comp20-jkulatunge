@@ -7,11 +7,12 @@
 </head>
 <body onload="getMyLocation()">
 
-<div id="map"></div>
+<div id="map"> <h1> Loading...</h1> </div>
 
 <script>
     myLat = 0;
 	myLng = 0;
+	
 	
 	function getMyLocation() {
 		navigator.geolocation.getCurrentPosition(gotLocation);
@@ -21,15 +22,37 @@
 		myLat = position.coords.latitude;
 		myLng = position.coords.longitude;	
 		initMap(); 
+		performRequest(); 
+	}
+
+
+	function performRequest() {
+	rideRequest = new XMLHttpRequest(); 
+	rideRequest.open("POST", "https://jordan-marsh.herokuapp.com/rides", true);
+	rideRequest.setRequestHeader ("Content-type", "application/x-www-form-urlencoded"); 
+
+	rideRequest.onreadystatechange = function() {
+				if (rideRequest.readyState == 4 && rideRequest.status == 200) {
+					responseInfo = rideRequest.responseText; 
+					responseInfo = JSON.parse(responseInfo); 
+					userMap ();  
+				}
+			}
+	rideRequest.send("username=nzLw9wQbNd&lat=" + myLat + "&lng=" + myLng); 
+	
 	}
 
     function initMap() {
-    	console.log("entered initmap" + myLat + myLng); 
     	map = new google.maps.Map(document.getElementById('map'), {
         	center: {lat: myLat, lng: myLng},
         	zoom: 15
         	});
       }
+
+    function userMap () {
+    	
+
+    } 
 
     </script>
 
