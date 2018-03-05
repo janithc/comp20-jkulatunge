@@ -43,14 +43,48 @@
 	}
 
     function initMap() {
+    	myPos = {lat: myLat, lng: myLng}; 
     	map = new google.maps.Map(document.getElementById('map'), {
-        	center: {lat: myLat, lng: myLng},
+        	center: myPos,
         	zoom: 15
-        	});
+        });
       }
 
     function userMap () {
-    	
+    	vehicleImg = {url:  '/car.png', 
+    				  scaledSize: new google.maps.Size(25, 50)
+    				 } ;
+
+    	passengerImg = {url:  '/person.png', 
+    					scaledSize: new google.maps.Size(35, 50)
+    					} ; 
+
+
+    	if (responseInfo.passengers == undefined) {
+    		var myMarker = new google.maps.Marker({
+   		 	position: myPos,
+    		map: map,
+    		icon: passengerImg});
+
+    		vehicles = responseInfo.vehicles;
+    		numV = vehicles.length; 
+
+    		for (i = 0; i < numV; i++){
+    			var userMarker = new google.maps.Marker({
+   		 		position: {lat:vehicles[i].lat, lng:vehicles[i].lng}, 
+    			map: map,
+    			icon: vehicleImg});  
+    		}
+    	}
+
+    	else if (responseInfo.vehicles == undefined) {
+    		var myMarker = new google.maps.Marker({
+   		 	position: myPos,
+    		map: map,
+    		icon: vehicleImg
+    
+  			});
+    	}
 
     } 
 
