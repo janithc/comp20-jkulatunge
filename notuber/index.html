@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>NotUber: COMP20 Assignment 2</title>
+	<title>NotUber: Janith Kulatunge</title>
 	<meta charset="utf-8">
 	<link href="style.css" rel="stylesheet" />
 </head>
@@ -50,7 +50,7 @@
 	}
 
     Number.prototype.toRad = function() {
-   return this * Math.PI / 180;}
+        return this * Math.PI / 180;}
 
     
     function haversine (lat1, lon1, lat2, lon2){ 
@@ -70,96 +70,117 @@
 
     function userMap () {
     	vehicleImg = {url:  "/car.png", 
-    				  scaledSize: new google.maps.Size(25, 50)
-    				 } ;
+    	   scaledSize: new google.maps.Size(25, 50)
+    	   } ;
 
     	passengerImg = {url:  "/person.png", 
-    					scaledSize: new google.maps.Size(35, 50)
-    					} ; 
+    	   scaledSize: new google.maps.Size(35, 50)
+    	   } ; 
 
     	if (responseInfo.passengers == undefined) {
 
-    		var myMarker = new google.maps.Marker({
-   		 	position: myPos,
-    		map: map,
-    		icon: passengerImg});
+            type = "vehicle"; 
+            myImage = passengerImg; 
+            addVehicles(); 
 
-    		vehicles = responseInfo.vehicles;
-    		numV = vehicles.length; 
-    		vPos = []; 
-    		var userMarker= []; 
-    		var dist = []; 
-
-    		for (i = 0; i < numV; i++){
-    			
-    			vPos [i] = {lat: vehicles[i].lat, lng: vehicles[i].lng}; 
-
-    			userMarker[i] = new google.maps.Marker({
-   		 		position: vPos[i], 
-    			map: map,
-    			icon: vehicleImg});  
-
-    			//dist[i] = 0.000621371 * (google.maps.geometry.spherical.computeDistanceBetween(vPos[i], myPos));
-    		}
-
-    		/*
-    		var infowindow = new google.maps.InfoWindow();
-    			google.maps.event.addListener(userMarker, "click", function() {
-				infowindow.setContent("Clicked on marker");
-				infowindow.open(map, userMarker);
-				});*/
     	}
 
     	else if (responseInfo.vehicles == undefined) {
 
-    		passengers = responseInfo.passengers;
-    		numP = passengers.length; 
-    		pPos = []; 
-    		var userMarker= []; 
-    		var dist = []; 
+            type = "passenger"; 
+            myImage = vehicleImg; 
+            addPassengers(); 
+    	
+        }
+    }
 
-    		for (i = 0; i < numP; i++) {
-    			
-    			pPos [i] = {lat: passengers[i].lat, lng: passengers[i].lng};
+    function addVehicles () {
+
+        vehicles = responseInfo.vehicles;
+        numV = vehicles.length; 
+        vPos = []; 
+        userMarker= []; 
+        dist = []; 
+
+            for (i = 0; i < numV; i++){
+                
+                vPos [i] = {lat: vehicles[i].lat, lng: vehicles[i].lng}; 
+
+                haversine (vPos[i].lat, vPos[i].lng, myPos.lat, myPos.lng); 
+
+                dist[i] = curr_dist;
+
+                userMarker[i] = new google.maps.Marker({
+                position: vPos[i], 
+                map: map,
+                icon: vehicleImg});  
+
+                userMarker[i].content =  '<div class = "InfoWindow">' + 'Vehicle Username = ' + vehicles[i].username + '<br> Distance to me = ' + curr_dist + ' miles </div>';
+            
+                infoWindow = new google.maps.InfoWindow();   
+
+                google.maps.event.addListener(userMarker[i], 'click', function () {
+                    infoWindow.setContent(this.content);
+                    infoWindow.open(map, this);
+                    });
+            }  
+
+        addMe(); 
+    } 
+
+
+    function addPassengers () {
+
+        passengers = responseInfo.passengers;
+        numV = passengers.length; 
+        pPos = []; 
+        userMarker= []; 
+        dist = []; 
+
+            for (i = 0; i < numV; i++){
+                
+                pPos [i] = {lat: passengers[i].lat, lng: passengers[i].lng}; 
 
                 haversine (pPos[i].lat, pPos[i].lng, myPos.lat, myPos.lng); 
 
                 dist[i] = curr_dist;
 
-    			userMarker = new google.maps.Marker({
-   		 		position: pPos[i], 
-    			map: map,
-    			icon: passengerImg});  
+                userMarker[i] = new google.maps.Marker({
+                position: pPos[i], 
+                map: map,
+                icon: passengerImg});  
 
-    			userMarker.content =  '<div class = "InfoWindow">' + 'Passenger Username = ' + passengers[i].username + '<br> Distance to nearest passenger = ' + dist[i] + '</div>';
+                userMarker[i].content =  '<div class = "InfoWindow">' + 'Passenger Username = ' + passengers[i].username + '<br> Distance to me = ' + curr_dist + ' miles </div>';
+            
+                infoWindow = new google.maps.InfoWindow();   
 
+                google.maps.event.addListener(userMarker[i], 'click', function () {
+                    infoWindow.setContent(this.content);
+                    infoWindow.open(map, this);
+                    });
+            }  
 
-    		}
-
-            var infoWindow = new google.maps.InfoWindow();
-            google.maps.event.addListener(userMarker, 'click', function () {
-                infoWindow.setContent(this.content);
-                infoWindow.open(this.getMap(), this);
-                });
-
-    		minDist = Math.min(dist);  
-
-    		var myInfoWindow = new google.maps.InfoWindow({
-    			content: '<div class = "InfoWindow">' + 'My Username = nzLw9wQbNd <br> Distance to nearest passenger = ' + minDist + ' miles </div>'
-  				});
-
-    		var myMarker = new google.maps.Marker({
-   		 	position: myPos,
-    		map: map,
-    		icon: vehicleImg});
-
-    		myMarker.addListener('click', function() {
-    			myInfoWindow.open(map, myMarker);
-  				});	
-    
-    	}
-
+        addMe(); 
     } 
+
+    function addMe (){
+
+        minDist = Math.min.apply(null, dist); 
+
+        myInfoWindow = new google.maps.InfoWindow({
+            content: '<div class = "InfoWindow">' + 'My Username = nzLw9wQbNd <br> Distance to nearest ' + type +' = ' + minDist + ' miles </div>'
+            });
+
+        myMarker = new google.maps.Marker({
+        position: myPos,
+        map: map,
+        icon: myImage});
+
+        myMarker.addListener('click', function() {
+            myInfoWindow.open(map, myMarker);
+            }); 
+    }
+
 
 </script>
 
