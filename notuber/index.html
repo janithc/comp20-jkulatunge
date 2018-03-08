@@ -49,6 +49,25 @@
 		rideRequest.send("username=nzLw9wQbNd&lat=" + myLat + "&lng=" + myLng); 
 	}
 
+    Number.prototype.toRad = function() {
+   return this * Math.PI / 180;}
+
+    
+    function haversine (lat1, lon1, lat2, lon2){ 
+
+    var R = 6371; 
+    var x1 = lat2-lat1;
+    var dLat = x1.toRad();  
+    var x2 = lon2-lon1;
+    var dLon = x2.toRad();  
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
+                Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) * 
+                Math.sin(dLon/2) * Math.sin(dLon/2);  
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    curr_dist = 0.621371 * (R * c); 
+
+    }
+
     function userMap () {
     	vehicleImg = {url:  "/car.png", 
     				  scaledSize: new google.maps.Size(25, 50)
@@ -57,7 +76,6 @@
     	passengerImg = {url:  "/person.png", 
     					scaledSize: new google.maps.Size(35, 50)
     					} ; 
-
 
     	if (responseInfo.passengers == undefined) {
 
@@ -68,15 +86,23 @@
 
     		vehicles = responseInfo.vehicles;
     		numV = vehicles.length; 
-/*
+    		vPos = []; 
     		var userMarker= []; 
+    		var dist = []; 
 
     		for (i = 0; i < numV; i++){
+    			
+    			vPos [i] = {lat: vehicles[i].lat, lng: vehicles[i].lng}; 
+
     			userMarker[i] = new google.maps.Marker({
-   		 		position: {lat:vehicles[i].lat, lng:vehicles[i].lng}, 
+   		 		position: vPos[i], 
     			map: map,
     			icon: vehicleImg});  
+
+    			//dist[i] = 0.000621371 * (google.maps.geometry.spherical.computeDistanceBetween(vPos[i], myPos));
     		}
+
+    		/*
     		var infowindow = new google.maps.InfoWindow();
     			google.maps.event.addListener(userMarker, "click", function() {
 				infowindow.setContent("Clicked on marker");
@@ -85,25 +111,61 @@
     	}
 
     	else if (responseInfo.vehicles == undefined) {
+
+    		passengers = responseInfo.passengers;
+    		numP = passengers.length; 
+    		pPos = []; 
+    		var userMarker= []; 
+    		var dist = []; 
+
+    		for (i = 0; i < numP; i++) {
+    			
+    			pPos [i] = {lat: passengers[i].lat, lng: passengers[i].lng};
+
+                haversine (pPos[i].lat, pPos[i].lng, myPos.lat, myPos.lng); 
+
+                dist[i] = curr_dist;
+
+    			userMarker = new google.maps.Marker({
+   		 		position: pPos[i], 
+    			map: map,
+    			icon: passengerImg});  
+
+    			userMarker.content =  '<div class = "InfoWindow">' + 'Passenger Username = ' + passengers[i].username + '<br> Distance to nearest passenger = ' + dist[i] + '</div>';
+
+
+    		}
+
+            var infoWindow = new google.maps.InfoWindow();
+            google.maps.event.addListener(userMarker, 'click', function () {
+                infoWindow.setContent(this.content);
+                infoWindow.open(this.getMap(), this);
+                });
+
+    		minDist = Math.min(dist);  
+
+    		var myInfoWindow = new google.maps.InfoWindow({
+    			content: '<div class = "InfoWindow">' + 'My Username = nzLw9wQbNd <br> Distance to nearest passenger = ' + minDist + ' miles </div>'
+  				});
+
     		var myMarker = new google.maps.Marker({
    		 	position: myPos,
     		map: map,
-    		icon: vehicleImg
+    		icon: vehicleImg});
+
+    		myMarker.addListener('click', function() {
+    			myInfoWindow.open(map, myMarker);
+  				});	
     
-  			});
     	}
 
     } 
 
-    </script>
+</script>
 
 <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAA3e7VPgMhZFgCEqXFvt4fnh9jNvpe4C8">
 </script>
-	
-
-
-
-
+  
 </body>
 </html>
