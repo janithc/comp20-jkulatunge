@@ -10,14 +10,27 @@
     <script>
         $(document).ready(function(){
 
+            currLog = ""; 
+            numVals = localStorage.length; 
+
+            for (var i = 0; i < numVals; i++) {
+                currLog = localStorage.getItem(localStorage.key(i)) + currLog;
+            }
+
             $("#msg").keypress(function (event) {
                 var key = event.which;
-                
-                if(key == 13) {
-                    var currLog = $("#log").html();
+        
+                if(key == 13)  {
                     var newEntry = $("#msg").val();
-                    $("#log").html( newEntry + "<br>" + currLog);
-                    $("#msg").val("");
+                    
+                    if (newEntry!="") {
+                        dispString = Date($.now()) + " - " + newEntry + "<br>" ; 
+                        $("#log").html(dispString + currLog);
+                        currLog = dispString + currLog; 
+                        $("#msg").val(""); 
+                        numVals = numVals + 1; 
+                        localStorage.setItem(numVals, dispString);
+                    }
                 }
             });   
 
