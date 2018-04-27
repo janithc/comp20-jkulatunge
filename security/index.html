@@ -3,7 +3,7 @@
 <head>
 	<title>Comp 20: Assignment #4</title>
 	<meta charset="utf-8">
-	<link href="style.css" rel="stylesheet" />
+
 </head>
 <body>
 	<h1 class = "heading" > Comp20: Assignment #4</h1>
@@ -37,12 +37,13 @@
 				<ul>
 					<li> Issue: Cross Site Scripting</li>
 					<li> Location: POST /rides API</li>
-					<li> Severity: </li>
-					<li> Description: Javascript commands (sent to rides API as data) are accepted by the server and inserted into database as strings </li>
+					<li> Severity: High. XSS vulnerabilities are often preyed upon by attackers. They allow often attackers manipulate client side Javascript, by submitting strings of code within POST requests. </li>
+					<li> Description: Javascript commands (sent to rides API as data) are accepted by the server and inserted into database in the exact format and syntax that they were received in </li>
 					<li> Proof: <br> 
+						<p> Following screenshots show Javascript being sent to server, as "username," using curl in the Terminal. Server accepts string and inserts into database. Second screenshot, of mLab window, shows document containing Javascript in database collection <br> </p>
 						<img src = "/XSSerror.png" alt = "screenshot showing no error being returned by site when Javascript sent"/>
 						<img src = "/XSSinDB.png" alt = "screenshot of collection, from mLab, showing Javascript in database" /> </li>
-					<li> Resolution: Insert following line of code between lines 57 and 58 to remove special characters from username sent by client <br> 
+					<li> Resolution: Insert following line of code between lines 57 and 58 of index.js to sanitize input and remove special characters from username sent by client <br> 
 						<code> username = username.replace(/[^\w\s]/gi, ''); </code> <br> </li> 
 				</ul>
 			</div>
