@@ -40,9 +40,10 @@
 					<li> Severity: High. XSS vulnerabilities are often preyed upon by attackers. They allow often attackers manipulate client side Javascript, by submitting strings of code within POST requests. </li>
 					<li> Description: Javascript commands (sent to rides API as data) are accepted by the server and inserted into database in the exact format and syntax that they were received in </li>
 					<li> Proof: <br> 
-						<p> Following screenshots show Javascript being sent to server, as "username," using curl in the Terminal. Server accepts string and inserts into database. Second screenshot, of mLab window, shows document containing Javascript in database collection <br> </p>
+						<p> The first screenshot shows Javascript being sent to server, as "username," using curl in the Terminal. Server accepts string and inserts into database. The second screenshot, of mLab window, shows document containing Javascript in database collection. The final screenshot shows the alert window, which was encoded in the XSS request, opened as the home page tries to display passenger list. <br> </p>
 						<img src = "/XSSerror.png" alt = "screenshot showing no error being returned by site when Javascript sent"/>
-						<img src = "/XSSinDB.png" alt = "screenshot of collection, from mLab, showing Javascript in database" /> </li>
+						<img src = "/XSSinDB.png" alt = "screenshot of collection, from mLab, showing Javascript in database" /> 
+						<img src = "/XSSalert.png" alt = "screenshot of app client showing alert window encoded in XSS submission" /></li>
 					<li> Resolution: Insert following line of code between lines 57 and 58 of index.js to sanitize input and remove special characters from username sent by client <br> 
 						<code> username = username.replace(/[^\w\s]/gi, ''); </code> <br> </li> 
 				</ul>
