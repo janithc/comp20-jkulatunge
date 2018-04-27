@@ -40,8 +40,8 @@
 					<li> Severity: </li>
 					<li> Description: Javascript commands (sent to rides API as data) are accepted by the server and inserted into database as strings </li>
 					<li> Proof: <br> 
-						<img src = "/XSSerror" alt = "screenshot showing no error being returned by site when Javascript sent" /> 
-						<img src = "/XSSinDB" alt = "screenshot of collection, from mLab, showing Javascript in database" /> </li>
+						<img src = "/XSSerror.png" alt = "screenshot showing no error being returned by site when Javascript sent"/>
+						<img src = "/XSSinDB.png" alt = "screenshot of collection, from mLab, showing Javascript in database" /> </li>
 					<li> Resolution: Insert following line of code between lines 57 and 58 to remove special characters from username sent by client <br> 
 						<code> username = username.replace(/[^\w\s]/gi, ''); </code> <br> </li> 
 				</ul>
