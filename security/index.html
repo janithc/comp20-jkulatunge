@@ -10,6 +10,7 @@
 	<h2 class = "heading"> Spring 2018</h2>
 	<h3> <span class = "heading"> Assignment Written by: </span> Janith Kulatunge <br>
 		<span class ="heading"> App Developed by: </span> Noah Hill </h3>
+		<a href="https://lit-temple-18109.herokuapp.com/"> Link to App </a>
 
 	<h4> Introduction</h4> 
 	<p> </p>
@@ -25,18 +26,20 @@
 			<div class ="issue"> 
 				<ul>
 					<li> Issue: Broken Authentication/ Sensitive Data Exposure</li>
-					<li> Location:  </li>
-					<li> Severity: </li>
-					<li> Description: Despite not being a driver I am able to claim that I am by setting the username that I send to the server as a driver's (JANET in this case). This gives me access to the position data of all passengers, even though I am not actually a driver. If an app like Uber used this implementation, all an attacker has to do is correctly guess a driver's username, to gain access to sensitive data recent passengers. </li>
-					<li> Proof: </li>
-					<li> Resolution: </li>
+					<li> Location: POST /rides API </li>
+					<li> Severity: High </li>
+					<li> Description: Despite not being a driver, I am able to act as one by setting the username that I send to the server as a driver's (JANET in this case). This gives me access to the position data of all passengers, even though I am not actually a driver. If an app like Uber used this implementation, all an attacker has to do is correctly guess a driver's username, to gain access to sensitive data from recent passengers. </li>
+					<li> Proof: 
+						Screenshot shows data for numerous passengers being sent to server, followed by data for JANET
+						<img src = "/AuthTerm.png" alt = "screenshot showing some passenger data being sent to server followed by JANET user, which returns all passenger data"/></li>
+					<li> Resolution: Add user authentication to the site. Would be best to use existing framework, such as Passport.js. </li>
 				</ul>
 			</div>
 
 			<div class ="issue"> 
 				<ul>
 					<li> Issue: Cross Site Scripting</li>
-					<li> Location: POST /rides API</li>
+					<li> Location: POST /rides API and GET / (home) </li>
 					<li> Severity: High. XSS vulnerabilities are often preyed upon by attackers. They allow often attackers manipulate client side Javascript, by submitting strings of code within POST requests. </li>
 					<li> Description: Javascript commands (sent to rides API as data) are accepted by the server and inserted into database in the exact format and syntax that they were received in </li>
 					<li> Proof: <br> 
