@@ -14,13 +14,13 @@
 		<a href="https://lit-temple-18109.herokuapp.com/"> Link to App </a>
 
 	<h4> Introduction</h4> 
-	<p> The product consists of the client and server side of a ride sharing service. There are two types of users, vehicles and passengers, that are classified by their username. Each type uses the service to post their location, and get the locations of all users of the other type. The purpose of this investigation was to determine what some of the significant security vulnerabilities that existed in the product.  </p>
+	<p> The product consists of the client and server side of a ride sharing service. There are two types of users, vehicles and passengers, that are classified by their username. Each type uses the service to post their location, and get the locations of all users of the other type. The purpose of this investigation was to determine what some of the significant security vulnerabilities that existed in the product. Unexpected inputs and corner cases were sent to the server, to see how it responds. Security weaknesses within the app were indentified, their causes were listed, and recommendations were made as to how to remove them.  </p>
 
 	<h4> Methodology</h4> 
-	<p> I focused on providing the server with problematic data, through curl on the command line, and observing whether the resulting effect could have been problematic. Some issues, which could permit attackers with malicious intent to utilize the product in a way that it was not intended, have been described below. </p>
+	<p> I focused on providing the server with problematic data, through curl on the command line, and observing whether the resulting effect could represent a vulnerability of the site. Some issues, which could permit attackers with malicious intent to utilize the product in a way that it was not intended, have been described below. </p>
 
 	<h4> Abstract of Findings</h4> 
-	<p> I found that a number of issues from the OWASP top 10 list were evident in this app. These included bad authentication that lead to leaking of sensitive data, cross site scripting, and database injection. In general, the problems were the product of specific pieces of </p>
+	<p> A number of issues from the OWASP top 10 list were found in this app. The first showed that there was potential for a unauthorized user to gain access to all other users information from the database. I recommended that password protection be used to avoid this. The second vulnerability allows attackers to add their own code to the app. An attacker could use this vulnerability to highjack the app, and use it for their own purposes. This can be avoided by filtering the data that is sent by users. The final vulnerability is similar to the first, wherein it represents a threat to stored data. By sending a particular piece of data to the database, a user may gain access to all entries in the database. This issues can also be avoided by filtering user input. </p>
 
 	<h4> Issues found</h4> 
 		<p> 
@@ -28,8 +28,8 @@
 				<ul>
 					<li> Issue: Broken Authentication/ Sensitive Data Exposure</li>
 					<li> Location: POST /rides API </li>
-					<li> Severity: High </li>
-					<li> Description: Despite not being a driver, I am able to act as one by setting the username that I send to the server as a driver's (JANET in this case). This gives me access to the position data of all passengers, even though I am not actually a driver. If an app like Uber used this implementation, all an attacker has to do is correctly guess a driver's username, to gain access to sensitive data from recent passengers. </li>
+					<li> Severity: High. An attacker may easily guess or gain access to driver usernames (hardcoded into the server), which is all they need to carry out this attack. </li>
+					<li> Description: Despite not being a driver, I am able to act as one by setting the username that I send to the server as any driver's (JANET in this case). This gives me access to the position data of all passengers. If an app like Uber used this implementation, all an attacker has to do is correctly guess a driver's username, to gain access to sensitive data from recent passengers. </li>
 					<li> Proof:
 						Screenshot shows data for numerous passengers being sent to server, followed by data for JANET
 						<img src = "/AuthTerm.png" alt = "screenshot showing some passenger data being sent to server followed by JANET user, which returns all passenger data" width = 65%/></li>
@@ -57,7 +57,7 @@
 				<ul>
 					<li> Issue: MongoDB Injection</li>
 					<li> Location GET /vehicles.json API </li>
-					<li> Severity: High </li>
+					<li> Severity: High. This example showed how an attacker can access all documents from the database; a similar approach can also be used to delete all information stored in the database.  </li>
 					<li> Description: This API is supposed to return data on the specific username given, if it exists. If $gt is added to the username requested (see screenshots for syntax), all entries in the database are greater than the query string username are returned. Thus, an attacker can access all documents in the vehicle collection, by querying with an empty username </li>
 					<li> Proof: Screenshot shows curl query that returns all driver's data <br>
 						<img src = "/Injection.png" alt = "screenshot showing username\[$gt\]='' being sent as query to vehicles.json, and all vehicle documents being returned " width = 65%/></li>
