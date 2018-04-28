@@ -54,12 +54,13 @@
 
 			<div class ="issue"> 
 				<ul>
-					<li> Issue: </li>
-					<li> Location: </li>
-					<li> Severity: </li>
-					<li> Description: </li>
+					<li> Issue: MongoDB Injection</li>
+					<li> Location: GET /vehicles.json API </li>
+					<li> Severity: High </li>
+					<li> Description: This API is supposed to return data on the specific username given, if it exists. By adding $gt to the username requested (see screenshots for syntax), all entries in the database that are greater than the query string username are returned.  </li>
 					<li> Proof: </li>
-					<li> Resolution: </li>
+					<li> Resolution: Implement the same line of code for input sanitization, that is shown for the XSS issue. <br> 
+						<code> username = username.replace(/[^\w\s]/gi, ''); </code> <br>  </li>
 				</ul>
 			</div>
 
