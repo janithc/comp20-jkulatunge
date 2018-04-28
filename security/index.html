@@ -3,6 +3,7 @@
 <head>
 	<title>Comp 20: Assignment #4</title>
 	<meta charset="utf-8">
+	<link href="style.css" rel="stylesheet" />
 
 </head>
 <body>
@@ -13,13 +14,13 @@
 		<a href="https://lit-temple-18109.herokuapp.com/"> Link to App </a>
 
 	<h4> Introduction</h4> 
-	<p> </p>
+	<p> The product consists of the client and server side of a ride sharing service. There are two types of users, vehicles and passengers, that are classified by their username. Each type uses the service to post their location, and get the locations of all users of the other type. The purpose of this investigation was to determine what some of the significant security vulnerabilities that existed in the product.  </p>
 
 	<h4> Methodology</h4> 
-	<p> </p>
+	<p> I focused on providing the server with problematic data, through curl on the command line, and observing whether the resulting effect could have been problematic. Some issues, which could permit attackers with malicious intent to utilize the product in a way that it was not intended, have been described below. </p>
 
 	<h4> Abstract of Findings</h4> 
-	<p> </p>
+	<p> I found that a number of issues from the OWASP top 10 list were evident in this app. These included bad authentication that lead to leaking of sensitive data, cross site scripting, and database injection. In general, the problems were the product of specific pieces of </p>
 
 	<h4> Issues found</h4> 
 		<p> 
@@ -29,9 +30,9 @@
 					<li> Location: POST /rides API </li>
 					<li> Severity: High </li>
 					<li> Description: Despite not being a driver, I am able to act as one by setting the username that I send to the server as a driver's (JANET in this case). This gives me access to the position data of all passengers, even though I am not actually a driver. If an app like Uber used this implementation, all an attacker has to do is correctly guess a driver's username, to gain access to sensitive data from recent passengers. </li>
-					<li> Proof: 
+					<li> Proof:
 						Screenshot shows data for numerous passengers being sent to server, followed by data for JANET
-						<img src = "/AuthTerm.png" alt = "screenshot showing some passenger data being sent to server followed by JANET user, which returns all passenger data"/></li>
+						<img src = "/AuthTerm.png" alt = "screenshot showing some passenger data being sent to server followed by JANET user, which returns all passenger data" width = 65%/></li>
 					<li> Resolution: Add user authentication to the site. Would be best to use existing framework, such as Passport.js. </li>
 				</ul>
 			</div>
@@ -44,9 +45,9 @@
 					<li> Description: Javascript commands (sent to rides API as data) are accepted by the server and inserted into database in the exact format and syntax that they were received in </li>
 					<li> Proof: <br> 
 						<p> The first screenshot shows Javascript being sent to server, as "username," using curl in the Terminal. Server accepts string and inserts into database. The second screenshot, of mLab window, shows document containing Javascript in database collection. The final screenshot shows the alert window, which was encoded in the XSS request, opened as the home page tries to display passenger list. <br> </p>
-						<img src = "/XSSerror.png" alt = "screenshot showing no error being returned by site when Javascript sent"/>
-						<img src = "/XSSinDB.png" alt = "screenshot of collection, from mLab, showing Javascript in database" /> 
-						<img src = "/XSSalert.png" alt = "screenshot of app client showing alert window encoded in XSS submission" /></li>
+						<img src = "/XSSerror.png" alt = "screenshot showing no error being returned by site when Javascript sent" width = 45%/>
+						<img src = "/XSSinDB.png" alt = "screenshot of collection, from mLab, showing Javascript in database" width = 45% /> 
+						<img src = "/XSSalert.png" alt = "screenshot of app client showing alert window encoded in XSS submission" width = 100% /></li>
 					<li> Resolution: Insert following line of code between lines 57 and 58 of index.js to sanitize input and remove special characters from username sent by client <br> 
 						<code> username = username.replace(/[^\w\s]/gi, ''); </code> <br> </li> 
 				</ul>
@@ -55,11 +56,12 @@
 			<div class ="issue"> 
 				<ul>
 					<li> Issue: MongoDB Injection</li>
-					<li> Location: GET /vehicles.json API </li>
+					<li> Location GET /vehicles.json API </li>
 					<li> Severity: High </li>
-					<li> Description: This API is supposed to return data on the specific username given, if it exists. By adding $gt to the username requested (see screenshots for syntax), all entries in the database that are greater than the query string username are returned.  </li>
-					<li> Proof: </li>
-					<li> Resolution: Implement the same line of code for input sanitization, that is shown for the XSS issue. <br> 
+					<li> Description: This API is supposed to return data on the specific username given, if it exists. If $gt is added to the username requested (see screenshots for syntax), all entries in the database are greater than the query string username are returned. Thus, an attacker can access all documents in the vehicle collection, by querying with an empty username </li>
+					<li> Proof: Screenshot shows curl query that returns all driver's data <br>
+						<img src = "/Injection.png" alt = "screenshot showing username\[$gt\]='' being sent as query to vehicles.json, and all vehicle documents being returned " width = 65%/></li>
+					<li> Resolution: Implement the same line of code for input sanitization, that is shown for the XSS problem above. <br> 
 						<code> username = username.replace(/[^\w\s]/gi, ''); </code> <br>  </li>
 				</ul>
 			</div>
@@ -71,8 +73,10 @@
 	<p> </p>
 
 	<h4> References</h4> 
-	<p> </p>
-
+	<a href ="https://blog.websecurify.com/2014/08/hacking-nodejs-and-mongodb.html" > Hacking NodeJS and MongoDB</a> <br> 
+	<a href ="http://www.veracode.com/security/xss"> XSS Tutorial </a> <br>
+	<a href ="https://www.owasp.org/index.php/Top_10-2017_Top_10"> OWASP Top Ten 2017 </a> <br>
+ 
 
 </body>
 </html>
