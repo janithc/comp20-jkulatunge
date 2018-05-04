@@ -32,7 +32,7 @@
 					<li> Description: Despite not being a driver, I am able to act as one by setting the username that I send to the server as any driver's (JANET in this case). This gives me access to the position data of all passengers. If an app like Uber used this implementation, all an attacker has to do is correctly guess a driver's username, to gain access to sensitive data from recent passengers. </li>
 					<li> Proof:
 						Screenshot shows data for numerous passengers being sent to server, followed by data for JANET
-						<img src = "/images/AuthTerm.png" alt = "screenshot showing some passenger data being sent to server followed by JANET user, which returns all passenger data" width = 65%/></li>
+						<img src = "images/AuthTerm.png" alt = "screenshot showing some passenger data being sent to server followed by JANET user, which returns all passenger data" width = 65%/></li>
 					<li> Resolution: Add user authentication to the site. Would be best to use existing framework, such as Passport.js. </li>
 				</ul>
 			</div>
@@ -45,9 +45,9 @@
 					<li> Description: Javascript commands (sent to rides API as data) are accepted by the server and inserted into database in the exact format and syntax that they were received in. This code is integrated into, and run when the HTML homepage of the app is accessed.  </li>
 					<li> Proof: <br> 
 						<p> The first screenshot shows Javascript being sent to server, as "username," using curl in the Terminal. Server accepts string and inserts into database. The second screenshot, from mLab, shows document containing Javascript in database collection. The final screenshot shows the alert window, which was encoded in the XSS request, opened as the home page tries to display passenger list. <br> </p>
-						<img src = "/images/XSSerror.png" alt = "screenshot showing no error being returned by site when Javascript sent" width = 45%/>
-						<img src = "/images/XSSinDB.png" alt = "screenshot of collection, from mLab, showing Javascript in database" width = 45% /> 
-						<img src = "/images/XSSalert.png" alt = "screenshot of app client showing alert window encoded in XSS submission" width = 100% /></li>
+						<img src = "images/XSSerror.png" alt = "screenshot showing no error being returned by site when Javascript sent" width = 45%/>
+						<img src = "images/XSSinDB.png" alt = "screenshot of collection, from mLab, showing Javascript in database" width = 45% /> 
+						<img src = "images/XSSalert.png" alt = "screenshot of app client showing alert window encoded in XSS submission" width = 100% /></li>
 					<li> Resolution: Insert following line of code between lines 57 and 58 of index.js to sanitize input and remove special characters from username sent by client <br> 
 						<code> username = username.replace(/[^\w\s]/gi, ''); </code> <br> </li> 
 				</ul>
@@ -60,7 +60,7 @@
 					<li> Severity: High. This example demonstrates how an attacker can access all documents from the database; a similar approach can also be used to delete all information stored in the database.  </li>
 					<li> Description: This API is supposed to return data on the specific username given, if it exists. If $gt is added to the username requested (see screenshots for syntax), all entries in the database that are greater than the query string username are returned. Thus, an attacker can access all documents in the vehicle collection, by querying with an empty username </li>
 					<li> Proof: Screenshot shows curl query that returns all drivers' data <br>
-						<img src = "/images/Injection.png" alt = "screenshot showing username\[$gt\]='' being sent as query to vehicles.json, and all vehicle documents being returned " width = 65%/></li>
+						<img src = "images/Injection.png" alt = "screenshot showing username\[$gt\]='' being sent as query to vehicles.json, and all vehicle documents being returned " width = 65%/></li>
 					<li> Resolution: Implement the same line of code for input sanitization, that is shown for the XSS problem above. <br> 
 						<code> username = username.replace(/[^\w\s]/gi, ''); </code> <br>  </li>
 				</ul>
