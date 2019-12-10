@@ -1,4 +1,4 @@
-## COMP20 Assignment Repository
+### COMP20 Assignment Repository
 ### Spring 2018
 
 **What is this purpose of this repository?** 
